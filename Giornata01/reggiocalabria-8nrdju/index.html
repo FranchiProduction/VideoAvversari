@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="color-scheme" content="light dark">
+<title>Video</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#15181d;--muted:#5d6570;--card:#fff;--line:#e2e5ea;--accent:#0b63ce;--accent-fg:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1216;--fg:#eceff3;--muted:#98a1ad;--card:#181c22;--line:#2a3038;--accent:#4c9aff;--accent-fg:#06121f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:8px 0 4px}
+.sub{color:var(--muted);margin:0 0 20px}
+ol{list-style:none;counter-reset:n;padding:0;margin:0;display:grid;gap:12px}
+li{counter-increment:n;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+li::before{content:counter(n);flex:none;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font-weight:700;font-size:.95rem}
+.d{flex:1;min-width:0;overflow-wrap:anywhere}
+a.b{flex:none;background:var(--accent);color:var(--accent-fg);text-decoration:none;font-weight:600;padding:10px 16px;border-radius:10px}
+a.b:active{opacity:.8}
+form{display:grid;gap:12px;margin-top:24px}
+input{font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);width:100%}
+button{font:inherit;font-weight:600;padding:12px 14px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-fg)}
+.err{color:#d13b3b;min-height:1.4em;margin:0}
+</style>
+</head>
+<body>
+<main id="app">
+<h1>Area riservata</h1>
+<p class="sub">Inserisci la password per vedere i video.</p>
+<form id="f">
+<input id="pw" type="password" autocomplete="current-password" placeholder="Password" required autofocus>
+<button type="submit">Sblocca</button>
+<p class="err" id="err"></p>
+</form>
+</main>
+<script>
+const BLOB={"salt": "L5qYpqud1aPHLm4m7fKbBw==", "iv": "DiDfLB0eJ+FHwQO0", "ct": "DUvYb4OZDKbUAfGSGiXxkQJNMS3pL6res6jvEqkt4j/DL5goXeo6nIZrop0RFus+hQZk3fR/NsLhjDxMNZfiYde36oJqzdm78qWSLRa7ldmN/XcUZr+aHsV3DbOFjtoZ63nvTQjmdzxwg/1IzuXfUVzQL7AenatwVTyVctH8dryjmm7cszERJhUYTcEkKDak2ZcG+m9aa6faRCocPN2K10TwcW/tsDRE2n32KgdfDCqvEUDLRyAZGKn7AyJ4MjLEmc1p6DBeVbaTWHmvbGTsCCABYBlQUUN7EYWRdmFBOU5IyIMmvzp6RmTt24fqvr6okZkFH//LqFb2LmL7rsOu8MFUUNxKhQHxdSJPTW25xMl/RPeWjMp5E1eTZ2GyGNksbQQCzcRqXPFt+2pvETMwimLtrwGy096FLt6LJbUHLhx1TjDfWNmiKkXjjEeRV5LfkVZlkAwWh2t3l/YKjivOxBJhYLpqkDVaSP76OtiQxuqAphyLsSXikNu92k0H5A7p4+fXPHcZhRCtmWEbXuoGAD40CD0frIpZbUpjc0q2XqwILh+p2G1kO7FovH0SIkYHu3Swnnis0NJKRtLVO5Pyt9eMSMMrO7QvdAS10YpCqrkVwbyPn2OpYThFYsyLG37rmwIPlT4uEOG/YlqxR/+kMk+KKmqXP4FOhn9Zf7/JzlJJBfW1pbY8roIGrYg4mzn7vyROdCPJOdua3KWdOm0asRyzP8OcWmLICzWDO6J0exSyWBnAwgfdSWg74jE8Hw2HshlsDTsFEpyK8uTe/1P904qnr18TD87hSFhlcgPaqbmpvn/6NnKA3gsyGsgRryqBzoGlSvgDTCNc5MQqdkS7xORr8SDxAYVSNjCLuSXS+L7rDeO1R5ndFQTJPezyDzbJNwiELyikav9Mac4VSUIjp69JrzFDtWPxRtQD63+vfpSVzJtID9aWIbpvTGajKojlpyFMFj37RSRrEAl0Lm9AP60ZhYMmuZuYhJmK3xyMaIA2biBH+n+Ilxtw8RVWQ7SpmqJ4gRqP7Wjc+XENoKlEZasJyEfy7O76soDkYKv45UPWFhcaU7gQlmc1gtw3a9yCQVDFDW0P9ffBQXgYFyB5g/IIQp6y4hmGkbnrxE9uDp3eDCU+wRVhlAKE9ndjzazoUehFQKQ4dZ+uaLL02nJpbwg8oEhlDJSqHIJw07CED2/bHEiTKNEJXx6K4HyfryDP501lm2FyXEKSVFPyKgC7tp1tgZw2gbDtej4fS2qdvT4zpYv/4C03D+eFWFykeiCMKdu/HnujzISC9kslg6PqNjjEJI81fyxkcvIgcZ86o86HVBiP3b1vVGlyH+Weo9d0C59ifF1hiLODoRPY7Wq3Gdq8tMNEa4RhVKXcrFZ4UzISZc8muNwsC+KurxNnM3JomS1Hma9hro3BQTfig1nNyWa9xSm9iqxV37tDZYdOw33WgmygpWy5yQfnS3coVmSfwxTFxKwLKaAUOZDxA0bU2H0IggUiaOmdNHLqufW6eLc10TIVCqIGgrTl5Zhg6E+kmwrYtioVGFgL+MDefkJnKfUJLpl4yTfun8rvhHTJ33FiLPqNUNR74HiBZDD0Z28Oy/S8apa2mzB98tq2f/AwXYs+IiFBqNkELAHUQDWuUGv5S9dXjPoUATlpg9cL8y103DkB9SCpCCI/nbAcVP9kwdnhLrzHWxq/gQc+bDqG+v2G/AFcRE12VaxSB73EVQxIxbAyRlcyJaYz+M6SKxfHgiPQhX5J5dG8d+6NoUZYwmtgtsrvO3rOBgn/ws43RzRplnUMsTjCjSiFml+fPQITLKjEEa1mULP7R9XGG86JvsEjKP0bmheaFrM+pyXv3Qrnqjy1vRzmnInG4n/u0xFFFvXnCfG5u4o+SfK2iQMxzzJns4ncJL6Nk3t9z/E=", "iterations": 250000};
+const KEY="va:"+location.pathname;
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function dec(pw){
+  const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+  const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(BLOB.salt),iterations:BLOB.iterations,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+  const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(BLOB.iv)},key,b64(BLOB.ct));
+  return new TextDecoder().decode(pt);
+}
+async function unlock(pw,remember){
+  try{
+    const html=await dec(pw);
+    document.getElementById("app").innerHTML=html;
+    try{if(remember)localStorage.setItem(KEY,pw)}catch(e){}
+    return true;
+  }catch(e){return false}
+}
+document.getElementById("f").addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  const ok=await unlock(document.getElementById("pw").value,true);
+  if(!ok)document.getElementById("err").textContent="Password errata.";
+});
+(async()=>{
+  try{const s=localStorage.getItem(KEY);if(s&&!(await unlock(s,false)))localStorage.removeItem(KEY)}catch(e){}
+})();
+</script>
+</body>
+</html>
