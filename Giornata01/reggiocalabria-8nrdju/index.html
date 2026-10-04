@@ -21,7 +21,9 @@ li::before{content:counter(n);flex:none;width:32px;height:32px;border-radius:50%
 a.b{flex:none;background:var(--accent);color:var(--accent-fg);text-decoration:none;font-weight:600;padding:10px 16px;border-radius:10px}
 a.b:active{opacity:.8}
 form{display:grid;gap:12px;margin-top:24px}
-input{font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);width:100%}
+#pw{font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);width:100%}
+label.sh{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.95rem}
+label.sh input{width:20px;height:20px;margin:0;accent-color:var(--accent)}
 button{font:inherit;font-weight:600;padding:12px 14px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-fg)}
 .err{color:#d13b3b;min-height:1.4em;margin:0}
 </style>
@@ -32,12 +34,13 @@ button{font:inherit;font-weight:600;padding:12px 14px;border-radius:10px;border:
 <p class="sub">Inserisci la password per vedere i video.</p>
 <form id="f">
 <input id="pw" type="password" autocomplete="current-password" placeholder="Password" required autofocus>
+<label class="sh"><input id="show" type="checkbox"> Mostra password</label>
 <button type="submit">Sblocca</button>
 <p class="err" id="err"></p>
 </form>
 </main>
 <script>
-const BLOB={"salt": "L5qYpqud1aPHLm4m7fKbBw==", "iv": "DiDfLB0eJ+FHwQO0", "ct": "DUvYb4OZDKbUAfGSGiXxkQJNMS3pL6res6jvEqkt4j/DL5goXeo6nIZrop0RFus+hQZk3fR/NsLhjDxMNZfiYde36oJqzdm78qWSLRa7ldmN/XcUZr+aHsV3DbOFjtoZ63nvTQjmdzxwg/1IzuXfUVzQL7AenatwVTyVctH8dryjmm7cszERJhUYTcEkKDak2ZcG+m9aa6faRCocPN2K10TwcW/tsDRE2n32KgdfDCqvEUDLRyAZGKn7AyJ4MjLEmc1p6DBeVbaTWHmvbGTsCCABYBlQUUN7EYWRdmFBOU5IyIMmvzp6RmTt24fqvr6okZkFH//LqFb2LmL7rsOu8MFUUNxKhQHxdSJPTW25xMl/RPeWjMp5E1eTZ2GyGNksbQQCzcRqXPFt+2pvETMwimLtrwGy096FLt6LJbUHLhx1TjDfWNmiKkXjjEeRV5LfkVZlkAwWh2t3l/YKjivOxBJhYLpqkDVaSP76OtiQxuqAphyLsSXikNu92k0H5A7p4+fXPHcZhRCtmWEbXuoGAD40CD0frIpZbUpjc0q2XqwILh+p2G1kO7FovH0SIkYHu3Swnnis0NJKRtLVO5Pyt9eMSMMrO7QvdAS10YpCqrkVwbyPn2OpYThFYsyLG37rmwIPlT4uEOG/YlqxR/+kMk+KKmqXP4FOhn9Zf7/JzlJJBfW1pbY8roIGrYg4mzn7vyROdCPJOdua3KWdOm0asRyzP8OcWmLICzWDO6J0exSyWBnAwgfdSWg74jE8Hw2HshlsDTsFEpyK8uTe/1P904qnr18TD87hSFhlcgPaqbmpvn/6NnKA3gsyGsgRryqBzoGlSvgDTCNc5MQqdkS7xORr8SDxAYVSNjCLuSXS+L7rDeO1R5ndFQTJPezyDzbJNwiELyikav9Mac4VSUIjp69JrzFDtWPxRtQD63+vfpSVzJtID9aWIbpvTGajKojlpyFMFj37RSRrEAl0Lm9AP60ZhYMmuZuYhJmK3xyMaIA2biBH+n+Ilxtw8RVWQ7SpmqJ4gRqP7Wjc+XENoKlEZasJyEfy7O76soDkYKv45UPWFhcaU7gQlmc1gtw3a9yCQVDFDW0P9ffBQXgYFyB5g/IIQp6y4hmGkbnrxE9uDp3eDCU+wRVhlAKE9ndjzazoUehFQKQ4dZ+uaLL02nJpbwg8oEhlDJSqHIJw07CED2/bHEiTKNEJXx6K4HyfryDP501lm2FyXEKSVFPyKgC7tp1tgZw2gbDtej4fS2qdvT4zpYv/4C03D+eFWFykeiCMKdu/HnujzISC9kslg6PqNjjEJI81fyxkcvIgcZ86o86HVBiP3b1vVGlyH+Weo9d0C59ifF1hiLODoRPY7Wq3Gdq8tMNEa4RhVKXcrFZ4UzISZc8muNwsC+KurxNnM3JomS1Hma9hro3BQTfig1nNyWa9xSm9iqxV37tDZYdOw33WgmygpWy5yQfnS3coVmSfwxTFxKwLKaAUOZDxA0bU2H0IggUiaOmdNHLqufW6eLc10TIVCqIGgrTl5Zhg6E+kmwrYtioVGFgL+MDefkJnKfUJLpl4yTfun8rvhHTJ33FiLPqNUNR74HiBZDD0Z28Oy/S8apa2mzB98tq2f/AwXYs+IiFBqNkELAHUQDWuUGv5S9dXjPoUATlpg9cL8y103DkB9SCpCCI/nbAcVP9kwdnhLrzHWxq/gQc+bDqG+v2G/AFcRE12VaxSB73EVQxIxbAyRlcyJaYz+M6SKxfHgiPQhX5J5dG8d+6NoUZYwmtgtsrvO3rOBgn/ws43RzRplnUMsTjCjSiFml+fPQITLKjEEa1mULP7R9XGG86JvsEjKP0bmheaFrM+pyXv3Qrnqjy1vRzmnInG4n/u0xFFFvXnCfG5u4o+SfK2iQMxzzJns4ncJL6Nk3t9z/E=", "iterations": 250000};
+const BLOB={"salt": "D2BbFC4xbKZGyRgleuR5mg==", "iv": "qBFVAKxJJ7mz7IjQ", "ct": "tHY3iLJPiGtHvLLx8ybrCwDZobMIgZ6MbcctdA2/MaqC3rs/BYa4dENSDNN7kxpTohWL9Y8HPMmrzbeENiReQooNwC7F6ONEthu00L9m5N7VvLBR4Ej8xtbTlQNiO8OuiTVRHY5YY12MRFVqum25LbtJw08bO3IN2EBbzL5iIjS2i9KiFy72U5gbWYkY+Z3zJuZVYTzVPvfz9z0+pqpGO74oHMKl19sQvoJTtsUua+4pIsNnXu8ACZ7VfgG8kpJpfst/C2SKSdkBi4mBFxAggjAx5j1XGv26usGKwZwIcF49bV1XmoJ2kP103nAdYY3IB25UefyhQFMKF+xk9W6nADhrK95vtllTbP33oCJIJcFM9sUi45gO0wjFjJo555+PbIqqUBumAuXd6rcqGkr2o7NbaLON9QsfYPDINunD73Vgs6JGzy2D/uEeLQGEgriP243Nfi3m1rCWsqFoR5ijir+EpMMLuiN6GhTEn5TPqIW1o5LSJFvTPQfpumLM7hu4AlpZQV8AvLXifYaaIg1Rd8Nzv2mVydI5FBffgpbNK6Gv9Wb6HARgCmfSTu3bTDflTEPi7u5CIyP6rECgqiKAs+ec8AV8bEsIyh1j0Et9o6FaxfLS2QhP413cVgjvpzZ3+riWBGFAP2JNJdPHeeDqPCkWPYSU48vR6lCEC+aVqvH8usk1ziuw2Ef+HFohVSSWqqW41dxkQjc/cwVdj3TiNbarPrUBACNCTR2NFA0ilDBCe+Pid5nNtbbD820KrLkLiBqMqNAlxmBZdbiEP5NQ6yBLqfTauWPFyOxGFLeTXTuGS8NsQfQq8/C20F369+2Zq4BnUBXhCMzcUAL/xfdka4E4f9S94ZQ8LpQtaci5QJqozDim5U0V2VudUfHlpABIMLEl9g4IVFTtZNJYol/BlLFd6ySs854pHvO4nTFMga1Ycv5Wpc5MrPDBHWYu1IBfXMBVy+xP8l9fwus+apKpVmj9gsqCuoMJ5Cxvnm2+1CzATVsOwFbtVs9wIzK064BEbHbr9dTd4mQllzGRP5A72UymEDGO7JfUTCrUR2NRZmGN38tZ8YyLqH/S+Q/mddQDRWw2RYI9aevWoEqsaMsaZXNzvk8Qflv+M5WWp+2dIyAT2ealwQr0ZzM86ImOirFTMDutHVuoGLfwoXMaJBAKTrgnme3NNuVa/Vd+VND1+iXBSCLGKnZ4CXbCDiAVZZsvKCH1tlraYeIw2qnbc8G0yXryoVrZ/JWXM7bhS9EW/LVv7uVUwAYicwM1M/87E9dW3chN9jRxsVFTAYVLqNA7pC5Pjz1299lfxureIWj3q3BO8twWfaaBzD7A8PaIu6eeH41ZZNi5lal5dOjEKX80QTbnYAfl/J3asI6w7H/ve29HDHm4n0+E3KYRHy5Eb3EDhXlOlxfjZZsN5CVNz9HBKL/eEdHl0l8UVCBBBilsIooYUfDngqut5zjcyo9RTtLKkgJF+b8+xg/xDKA5//WesZiE+aY0/Hxm284fy/p2vT1KqdHhTSDcemuCAmec8Lg4Vtp5KivytRhnXTE6et8LQdFTTV7iGcTLlsO5cJJVX582nrPsDA4rnRhVR6ial/ij3imN+zToUx289hnw5Zd+T/JgNe1D9JGZgVGLksJiE5qUTVHtjxWOY0oN6hcXgMxTey9nHUL0JPShe3uzi4gMVSLZs5t8pZHxGHsEA3yS8VZvIkt82IUxQNlVT5OKux8IH2oaEPFbGI7Ric2qNzGL+UoXhyUV0CS582nPmzutAm5QyNJjlzPVMq41QXyTa32hXcnL8ZzpCBTpmYMY2xcjMNI6l4LVZx9HTVUBviiPMlmPtPmNG+qomdY0QhTJWlp3Q1zfX8U+YjcTce9XhlOXOmzlCWvnGlf9+WiexDq3zCxp9twoYpe2ZPHhiig=", "iterations": 250000};
 const KEY="va:"+location.pathname;
 const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 async function dec(pw){
@@ -54,6 +57,9 @@ async function unlock(pw,remember){
     return true;
   }catch(e){return false}
 }
+document.getElementById("show").addEventListener("change",e=>{
+  document.getElementById("pw").type=e.target.checked?"text":"password";
+});
 document.getElementById("f").addEventListener("submit",async ev=>{
   ev.preventDefault();
   const ok=await unlock(document.getElementById("pw").value,true);
