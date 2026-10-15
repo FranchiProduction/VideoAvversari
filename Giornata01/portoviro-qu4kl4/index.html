@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="color-scheme" content="light dark">
+<title>Video</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#15181d;--muted:#5d6570;--card:#fff;--line:#e2e5ea;--accent:#0b63ce;--accent-fg:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1216;--fg:#eceff3;--muted:#98a1ad;--card:#181c22;--line:#2a3038;--accent:#4c9aff;--accent-fg:#06121f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:8px 0 4px}
+.sub{color:var(--muted);margin:0 0 20px}
+ol{list-style:none;counter-reset:n;padding:0;margin:0;display:grid;gap:12px}
+li{counter-increment:n;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+li::before{content:counter(n);flex:none;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font-weight:700;font-size:.95rem}
+.d{flex:1;min-width:0;overflow-wrap:anywhere}
+a.b{flex:none;background:var(--accent);color:var(--accent-fg);text-decoration:none;font-weight:600;padding:10px 16px;border-radius:10px}
+a.b:active{opacity:.8}
+form{display:grid;gap:12px;margin-top:24px}
+#pw{font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);width:100%}
+label.sh{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.95rem}
+label.sh input{width:20px;height:20px;margin:0;accent-color:var(--accent)}
+button{font:inherit;font-weight:600;padding:12px 14px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-fg)}
+.err{color:#d13b3b;min-height:1.4em;margin:0}
+</style>
+</head>
+<body>
+<main id="app">
+<h1>Area riservata</h1>
+<p class="sub">Inserisci la password per vedere i video.</p>
+<form id="f">
+<input id="pw" type="password" autocomplete="current-password" placeholder="Password" required autofocus>
+<label class="sh"><input id="show" type="checkbox"> Mostra password</label>
+<button type="submit">Sblocca</button>
+<p class="err" id="err"></p>
+</form>
+</main>
+<script>
+const BLOB={"salt": "TwCBisuhjOUq/RB7DxzT3w==", "iv": "oK17dM9iq3Pl55LE", "ct": "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", "iterations": 250000};
+const KEY="va:"+location.pathname;
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function dec(pw){
+  const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+  const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(BLOB.salt),iterations:BLOB.iterations,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+  const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(BLOB.iv)},key,b64(BLOB.ct));
+  return new TextDecoder().decode(pt);
+}
+async function unlock(pw,remember){
+  try{
+    const html=await dec(pw);
+    document.getElementById("app").innerHTML=html;
+    try{if(remember)localStorage.setItem(KEY,pw)}catch(e){}
+    return true;
+  }catch(e){return false}
+}
+document.getElementById("show").addEventListener("change",e=>{
+  document.getElementById("pw").type=e.target.checked?"text":"password";
+});
+document.getElementById("f").addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  const ok=await unlock(document.getElementById("pw").value,true);
+  if(!ok)document.getElementById("err").textContent="Password errata.";
+});
+(async()=>{
+  try{const s=localStorage.getItem(KEY);if(s&&!(await unlock(s,false)))localStorage.removeItem(KEY)}catch(e){}
+})();
+</script>
+</body>
+</html>
